@@ -1,0 +1,3 @@
+0 Multimetro
+1 Osciloscopio
+2 Rasberry
