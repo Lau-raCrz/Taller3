@@ -1,12 +1,11 @@
-# Taller3_3corte
+# Taller 3
 
-
-# Segundo Punto
+## Segundo Punto
 
 Este proyecto implementa un sistema completo capaz de identificar dispositivos electrónicos en tiempo real, aplicando un modelo de TensorFlow Lite y mostrando un segmentado azul sobre la región donde se encuentra el objeto detectado.
 Además, se desarrolla una arquitectura cliente–servidor usando sockets TCP, hilos, semáforos, colas y mutex, y finalmente todo se despliega dentro de contenedores Docker.
 
-## Entrenamiento y preparación del modelo
+### Entrenamiento y preparación del modelo
 
 El proceso comenzó creando un dataset propio con imágenes de los dispositivos. Con TensorFlow se entrenó un modelo base y luego se convirtió a TensorFlow Lite para hacerlo más rápido.
 
@@ -34,7 +33,7 @@ self.interpreter.allocate_tensors()
 La conversión a TFLite hace que el modelo sea más liviano y que pueda correr rápido incluso dentro de un contenedor Docker.
 
 
-## Arquitectura Cliente–Servidor
+### Arquitectura Cliente–Servidor
 El sistema se dividió en dos partes independientes servidor.py, que corre el modelo de IA, y cliente.py, que captura la cámara y muestra la detección.
 
 El servidor ejecuta el modelo dentro de un mutex, ya que TFLite no soporta múltiples inferencias simultáneas:
@@ -56,7 +55,7 @@ self.semaforo_conexiones = threading.Semaphore(3)
 
 Esto evita que muchos clientes saturen el servidor.
 
-## Servidor
+### Servidor
 
 El servidor escucha en un puerto TCP, recibe frames enviados desde el cliente, los preprocesa y devuelve la predicción.
 
@@ -88,7 +87,7 @@ self.enviar_resultado(conn, resultado)
 
 ```
 
-## Cliente
+### Cliente
 
 El cliente corre tres hilos independientes, comunicados con colas (Queue) y protegidos con mutex.
 
@@ -114,15 +113,13 @@ self.cola_resultados.put(resultado)
 
 - Hilo de visualización
 
-´´´
-
+```
 resultado = self.cola_resultados.get()
 if resultado['confianza'] >= resultado['threshold']:
     frame = self.segmentar_objeto(frame, bbox)
 ```
 
-
-## Implementación con Docker
+### Implementación con Docker
 
 Una vez funcionando, se creó una estructura con dos contenedores: uno para el servidor y otro para el cliente.
 
@@ -130,6 +127,7 @@ Cada uno tiene su propio Dockerfile, instalando Python 3.10, OpenCV, TensorFlow 
 
 ```
 requirements.txt
+
 ```
 
 
@@ -140,4 +138,4 @@ docker compose build
 docker compose up
 ```
 
-# Tercer punto
+## 
