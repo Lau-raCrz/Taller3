@@ -8,21 +8,21 @@ Para esta parte implementaremos un despiegue de el repositorio humanoid-gym.
 
 1. Clonaremos primero el repositorio y crearemos un entorno virtual para ejecutar el despliegue.
 
-``
+```
 #Repositorio Git
 git clone https://github.com/0aqz0/humanoid-gym.git
 cd humanoid-gym
 #Entorno
 python -m venv humanoidgym
 source humanoidgym/bin/activate
-``
+```
 
 2. Descargaremos las librerias necesarias para desplegar sin ningun problema.
 
-``
+```
 pip install --upgrade pip
 pip install pybullet gymnasium numpy matplotlib mujoco
-``
+```
 3. Crearemos el archivo de DockerFile
 
 ```
@@ -41,15 +41,15 @@ CMD ["python", "humanoid_env.py", "--robot", "nao"]
 
 4. Construiremos el docker y lo iniciaremos.
 
-``
+```
 docker build -t humanoid-gym .
 docker run -it --rm humanoid-gym
-``
-``
+```
+```
 #Para visualizar
 xhost +
 docker run -it --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix humanoid-gym
-``
+```
 5. Si queremos visualizar uno diferente solo debemos tener encuenta los siguientes archivos.
 
 <img width="205" height="268" alt="image" src="https://github.com/user-attachments/assets/9695d038-7e1a-4777-b865-643367db2a1e" />
